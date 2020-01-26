@@ -1,5 +1,7 @@
 package app.web.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,14 @@ public class CarController {
 		this.carService = carService;
 	}
 
+	@GetMapping(value = "/all")
+	public ModelAndView all(ModelAndView modelAndView) {
+		List<CreateCarServiceModel> allCars = this.carService.getAllCars();
+		modelAndView.addObject("cars", allCars);
+		modelAndView.setViewName("all");
+		return modelAndView;
+	}
+	
 
 	@GetMapping(value = "/create")
 	public ModelAndView create(ModelAndView modelAndView) {
@@ -33,6 +43,8 @@ public class CarController {
 		this.carService.save(serviceCar);
 		return new ModelAndView("redirect:/all");
 	}
+	
+	
 	
 	
 }
