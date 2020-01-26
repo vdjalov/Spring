@@ -1,29 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>West Compass</title>
-    <link rel="stylesheet" href="css/reset-css.css"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	            xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
 <body>
 <main class="main">
-    <nav class="navbar navbar-expand-lg navbar-background">
-        <a class="nav-link text-white active h5" href="/">Home</a>
-        <div class="collapse navbar-collapse d-flex justify-content-end">
-            <ul class="navbar-nav row">
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active font-weight-bold" href="/create">Upload Car</a>
-                </li>
-                <li class="nav-item col-md-4">
-                    <a class="nav-link text-white active font-weight-bold" href="/all">All Cars</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+   <th:block th:include="~{fragments/navbar}"></th:block>
     <div class="container-fluid">
-        <h2 class="text-center text-white">Upload Car</h2>
+        <h2 class="text-center text-white">Upload Car, <span th:text="${name}"></span></h2>
         <form class="mx-auto w-15" method="post">
             <div class="row">
                 <div class="col col-md-3"></div>
