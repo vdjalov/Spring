@@ -1,16 +1,19 @@
 package app.data.models;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import app.data.enums.Gender;
 
@@ -25,26 +28,34 @@ public class Hero extends BaseEntity {
 	@Column(nullable = false)
 	private Gender gender;
 	
-	@Column(nullable = false)
-	private Integer level;
+	@Min(value = 0)
+	@Column(columnDefinition = "int default 0")
+	private int level;
 	
-	@Column(nullable = false)
-	private Integer stamina;
+	@Min(value = 0)
+	@Column(columnDefinition = "int default 0")
+	private int strength;
 	
-	@Column(nullable = false)
-	private Integer attack;
+	@Min(value = 0)
+	@Column(columnDefinition = "int default 0")
+	private int stamina;
 	
-	@Column(nullable = false)
-	private Integer defence;
+	@Min(value = 0)
+	@Column(columnDefinition = "int default 0")
+	private int attack;
+	
+	@Min(value = 0)
+	@Column(columnDefinition = "int default 0")
+	private int defence;
 		
-	@OneToMany(targetEntity = Item.class)
-	@JoinColumn(name = "item_id", referencedColumnName = "id")
+	@OneToMany(targetEntity = Item.class, mappedBy = "hero")
 	private List<Item> inventory;
 	
-	@OneToOne(targetEntity = User.class, mappedBy = "hero")
+	@OneToOne(targetEntity = User.class, mappedBy = "hero", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
 	public Hero() {
+		this.inventory = new ArrayList<Item>();
 	}
 
 	public String getName() {
@@ -63,35 +74,43 @@ public class Hero extends BaseEntity {
 		this.gender = gender;
 	}
 
-	public Integer getLevel() {
+	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(Integer level) {
+	public void setLevel(int level) {
 		this.level = level;
 	}
 
-	public Integer getStamina() {
+	public int getStrength() {
+		return strength;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
+
+	public int getStamina() {
 		return stamina;
 	}
 
-	public void setStamina(Integer stamina) {
+	public void setStamina(int stamina) {
 		this.stamina = stamina;
 	}
 
-	public Integer getAttack() {
+	public int getAttack() {
 		return attack;
 	}
 
-	public void setAttack(Integer attack) {
+	public void setAttack(int attack) {
 		this.attack = attack;
 	}
 
-	public Integer getDefence() {
+	public int getDefence() {
 		return defence;
 	}
 
-	public void setDefence(Integer defence) {
+	public void setDefence(int defence) {
 		this.defence = defence;
 	}
 
@@ -110,6 +129,7 @@ public class Hero extends BaseEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	
 	
 	

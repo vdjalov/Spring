@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 
 import app.data.models.User;
 import app.data.repositories.UserRepository;
+import app.service.UserService;
 import app.service.models.UserLoginModel;
+import app.service.models.UserProfileServiceModel;
 import app.service.models.UserRegisterModel;
 import app.utils.UserUtils;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -55,4 +58,23 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+
+	@Override
+	public UserProfileServiceModel getUserByUsername(String username) {
+		return this.modelMapper.map(this.userRepository.findByUsername(username).get(), UserProfileServiceModel.class);
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

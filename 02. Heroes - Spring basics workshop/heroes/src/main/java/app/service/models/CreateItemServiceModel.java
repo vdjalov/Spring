@@ -1,45 +1,17 @@
-package app.data.models;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+package app.service.models;
 
 import app.data.enums.Slot;
 
+public class CreateItemServiceModel {
 
-
-@Entity
-@Table(name = "items")
-public class Item extends BaseEntity{
-	
-	@Column(nullable = false, unique = true)
 	private String name;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
 	private Slot slot;
-	
-	@Column(nullable = false)
 	private Integer stamina;
-	
-	@Column(nullable = false)
 	private Integer strength;
-	
-	@Column(nullable = false)
 	private Integer attack;
-	
-	@Column(nullable = false)
 	private Integer defence;
-
-	@ManyToOne(targetEntity = Hero.class)
-	@JoinColumn(name = "hero_id", referencedColumnName = "id")
-	private Hero hero;
 	
-	public Item() {
+	public CreateItemServiceModel() {
 	}
 
 	public String getName() {
@@ -89,16 +61,8 @@ public class Item extends BaseEntity{
 	public void setDefence(Integer defence) {
 		this.defence = defence;
 	}
-
-	public Hero getHero() {
-		return hero;
-	}
-
-	public void setHero(Hero hero) {
-		this.hero = hero;
-	}
-
 	
 	
-
+	
+	
 }
