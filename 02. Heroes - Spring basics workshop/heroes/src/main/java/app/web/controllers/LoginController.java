@@ -12,12 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import app.service.UserService;
 import app.service.models.UserLoginModel;
+import app.session.MySession;
 
 @Controller
 @RequestMapping(value = "/users")
 public class LoginController {
 
-	public UserService userService;
+	private UserService userService;
+	
 	
 	@Autowired
 	public LoginController(UserService userService) {
@@ -28,6 +30,7 @@ public class LoginController {
 	@GetMapping("/login")
 	public ModelAndView getLoginView(ModelAndView modelAndView) {
 		modelAndView.setViewName("login");
+		MySession.mySession.clear();
 		return modelAndView;
 	}
 	
@@ -41,9 +44,11 @@ public class LoginController {
 			if(user != null && user.getHero() != null) {
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("hero", user.getHero().getName());
+				MySession.mySession.add(session);
 			} else if(user!= null) {
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("hero", null);
+				MySession.mySession.add(session);
 			} else {
 				return new ModelAndView("redirect:/users/login");
 			}

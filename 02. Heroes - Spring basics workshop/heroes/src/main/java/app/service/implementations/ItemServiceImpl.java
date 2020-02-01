@@ -46,8 +46,8 @@ public class ItemServiceImpl implements ItemService {
 			HeroItems heroItems = new HeroItems();
 			heroItems.setHero(this.heroRepository.findByName(heroName.toString()).get());
 			heroItems.setItem(item);
-			
-		
+			this.httpSession.setAttribute("username", httpSession.getAttribute("username"));
+			this.httpSession.setAttribute("hero", heroName.toString());
 		
 		this.httpSession.setAttribute("username", httpSession.getAttribute("username"));
 		this.itemRepository.saveAndFlush(item);

@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	private UserUtils userUtils;
 	
+	
 	@Autowired
 	public UserServiceImpl(ModelMapper modelMapper, UserRepository userRepository, UserUtils userUtils) {
 		this.modelMapper = modelMapper;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean save(UserRegisterModel userRegisterModel) {
 			if(this.validateUserPassword(userRegisterModel.getPassword(), userRegisterModel.getConfirmPassword())) {
+				
 				userRegisterModel.setPassword(this.userUtils.hashPassword(userRegisterModel.getPassword()));
 				User user = this.modelMapper.map(userRegisterModel, User.class);
 				this.userRepository.save(user);

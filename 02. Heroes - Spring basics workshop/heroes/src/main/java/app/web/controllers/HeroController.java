@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import app.service.HeroService;
 import app.service.models.CreateHeroServiceModel;
+import app.service.models.HeroDetailsServiceModel;
 import app.web.models.HeroDetailsViewModel;
 
 @Controller
@@ -46,7 +47,8 @@ public class HeroController {
 	
 	@GetMapping("/details/{name}")
 	public ModelAndView getHeroDetails(@PathVariable String name, ModelAndView modelAndView) {
-		HeroDetailsViewModel heroViewModel = this.modelMapper.map(this.heroService.findHeroByName(name), HeroDetailsViewModel.class);
+		HeroDetailsServiceModel heroDetailsServiceModel= this.heroService.findHeroByName(name);
+		HeroDetailsViewModel heroViewModel = this.modelMapper.map(heroDetailsServiceModel, HeroDetailsViewModel.class);
 		modelAndView.addObject("heroSpecs", heroViewModel);
 		modelAndView.setViewName("heroDetails");
 		return modelAndView;

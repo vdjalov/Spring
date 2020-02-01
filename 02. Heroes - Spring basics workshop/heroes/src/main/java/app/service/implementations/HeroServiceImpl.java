@@ -1,7 +1,5 @@
 package app.service.implementations;
 
-import javax.servlet.http.HttpSession;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,7 @@ import app.data.repositories.UserRepository;
 import app.service.HeroService;
 import app.service.models.CreateHeroServiceModel;
 import app.service.models.HeroDetailsServiceModel;
+import app.session.MySession;
 
 @Service
 public class HeroServiceImpl implements HeroService{
@@ -20,25 +19,23 @@ public class HeroServiceImpl implements HeroService{
 	private HeroRepository heroRepository;
 	private UserRepository userRepository;
 	private ModelMapper modelMapper;
-	private HttpSession session;
 	
 	@Autowired
-	public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ModelMapper modelMapper, HttpSession session) {
+	public HeroServiceImpl(HeroRepository heroRepository, UserRepository userRepository, ModelMapper modelMapper) {
 		this.heroRepository = heroRepository;
 		this.userRepository = userRepository;
 		this.modelMapper = modelMapper;
-		this.session = session;
 	}
 
 
 	@Override
 	public void save(CreateHeroServiceModel createHeroServiceModel) {
-		String username = this.session.getAttribute("username").toString();
+		String username = MySession.mySession.get(0).getAttribute("username").toString();
 		createHeroServiceModel.setUser(this.userRepository.findByUsername(username).get());
 		Hero hero = this.modelMapper.map(createHeroServiceModel, Hero.class);
 		
 		this.heroRepository.saveAndFlush(hero);
-		this.session.setAttribute("hero", hero.getName());
+		MySession.mySession.get(0).setAttribute("hero", hero.getName());
 		User user = this.userRepository.findByUsername(username).get();
 		user.setHero(hero);
 		this.userRepository.saveAndFlush(user);

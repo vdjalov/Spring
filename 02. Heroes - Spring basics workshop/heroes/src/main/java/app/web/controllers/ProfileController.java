@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import app.service.UserService;
+import app.session.MySession;
 import app.web.models.UserProfileViewModel;
 
 @Controller
@@ -31,10 +32,11 @@ public class ProfileController {
 	public ModelAndView getProfile(ModelAndView modelAndView, HttpSession session) {
 		modelAndView.setViewName("profile");
 	
-		String username = session.getAttribute("username").toString();
+		String username = MySession.mySession.get(0).getAttribute("username").toString();
 		UserProfileViewModel userProfileViewModel = this.modelMapper.map(this.userService.getUserByUsername(username), UserProfileViewModel.class);
 		String gender = userProfileViewModel.getHero().getGender().toString().toLowerCase();
-		modelAndView.addObject("username", username);
+		// We can add them one by one or a whole object as in merchant
+		modelAndView.addObject("username", username);            
 		modelAndView.addObject("email", userProfileViewModel.getEmail());
 		modelAndView.addObject("heroName", userProfileViewModel.getHero().getName());
 		modelAndView.addObject("genderUrl", "/img/" + gender + ".jpg");
