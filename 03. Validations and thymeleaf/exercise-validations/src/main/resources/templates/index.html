@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	            xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Test</title>
+</head>
+<body>
+
+<h1>MY DEMO</h1>
+<div th:text="${dateTime}"></div>
+<div th:text="${#dates.dayOfWeek(dateTime)}"></div>
+<div th:text="${#dates.format(dateTime, 'mm-dd-yyyy')}"></div>
+<div th:text="${#dates.createNow()}"></div>
+<div th:if="${#strings.endsWith(name,'r')}">Hello</div>
+<div th:if="${#strings.endsWith(name,'p')}">Goodbye</div>
+<div th:text="${#aggregates.sum(prices)}">Goodbye</div>
+<span>[[${name}]]</span>
+
+</body>
+</html>
