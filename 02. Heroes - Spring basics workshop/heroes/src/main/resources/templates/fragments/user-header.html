@@ -1,4 +1,4 @@
-<th:block th:if="${hero == null}" fragment>
+<th:block th:if="${session.hero == null}" fragment>
 	
 	<header>
         <nav class="navbar bg-dark navbar-expand-lg navbar-background bg-dark ">
@@ -11,7 +11,7 @@
                 <ul class="navbar-nav row">
                     <li class="nav-item mr-2">
                         <a class="nav-link text-white active h5" th:href="@{/heroes/create}">Create hero</a>
-                    </li>s
+                    </li>
                     <li class="nav-item mr-2">
                         <a class="nav-link text-white active h5" th:href="@{/items/create}">Create Item</a>
                     </li>
@@ -24,7 +24,7 @@
     </header>
 
 </th:block>
-<th:block th:unless="${hero == null}" fragment>
+<th:block th:unless="${session.hero == null}" fragment>
 
 <header>
         <nav class="navbar bg-dark navbar-expand-lg navbar-background bg-dark ">
@@ -43,7 +43,7 @@
                         <a class="nav-link text-white active h5" th:href="@{/items/create}">Create Item</a>
                     </li>
                     <li class="nav-item mr-2">
-                        <a class="nav-link text-white active h5"th: href="@{/heroes/details/} + ${hero}">Hero</a>
+                        <a class="nav-link text-white active h5" th:href="@{/heroes/details/} + ${hero}">Hero</a>
                     </li>
                     <li class="nav-item mr-2">
                         <a class="nav-link text-white active h5" th:href="@{/users/profile}">Profile</a>

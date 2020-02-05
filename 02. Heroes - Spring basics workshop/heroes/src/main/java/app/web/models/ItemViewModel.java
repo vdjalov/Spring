@@ -1,45 +1,18 @@
-package app.data.models;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+package app.web.models;
 
 import app.data.models.enums.Slot;
 
-@Entity
-@Table(name = "items")
-public class Item extends BaseModel {
+public class ItemViewModel {
 
-	@NotEmpty(message = "Item name cannot be empty")
-	@Column(nullable = false, unique = true)
+	
 	private String name;
-	
-	@Enumerated(EnumType.STRING)
-	@Min(value = 1)
-	@Column()
 	private Slot slot;
-	
-	@Min(value = 1)
-	@Column()
 	private int stamina;
-	
-	@Min(value = 1)
-	@Column()
 	private int strength;
-	
-	@Min(value = 1)
-	@Column()
 	private int attack;
-	
-	@Min(value = 1)
-	@Column()
 	private int defence;
-
-	public Item() {
+	
+	public ItemViewModel() {
 	}
 
 	public String getName() {
@@ -89,8 +62,6 @@ public class Item extends BaseModel {
 	public void setDefence(int defence) {
 		this.defence = defence;
 	}
-	
-	
 	
 	
 	

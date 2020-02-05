@@ -1,45 +1,32 @@
-package app.data.models;
+package app.service.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import app.data.models.enums.Slot;
 
-@Entity
-@Table(name = "items")
-public class Item extends BaseModel {
+public class RegisterItemServiceModel {
 
-	@NotEmpty(message = "Item name cannot be empty")
-	@Column(nullable = false, unique = true)
+	@NotEmpty(message = "Name cannot be empty")
 	private String name;
 	
-	@Enumerated(EnumType.STRING)
 	@Min(value = 1)
-	@Column()
 	private Slot slot;
 	
 	@Min(value = 1)
-	@Column()
 	private int stamina;
 	
 	@Min(value = 1)
-	@Column()
 	private int strength;
 	
 	@Min(value = 1)
-	@Column()
 	private int attack;
 	
 	@Min(value = 1)
-	@Column()
 	private int defence;
 
-	public Item() {
+	public RegisterItemServiceModel() {
 	}
 
 	public String getName() {

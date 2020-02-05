@@ -2,5 +2,5 @@ package app.data.models.enums;
 
 public enum Slot {
 	
-	Weapon, Helmet, Pauldron, Pads, Gauntlets;
+	WEAPON, HELMET, PAULDRON, PADS, GAUNTLETS;
 }

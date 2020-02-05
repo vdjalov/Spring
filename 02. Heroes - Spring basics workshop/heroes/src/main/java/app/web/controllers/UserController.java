@@ -68,7 +68,8 @@ public class UserController {
 				}
 			
 			session.setAttribute("username", loginUserServiceModel.getUsername());
-			return new ModelAndView("homeTemplates/home");
+		
+			return new ModelAndView("redirect:/home");
 	}
 	
 	@GetMapping("/register")

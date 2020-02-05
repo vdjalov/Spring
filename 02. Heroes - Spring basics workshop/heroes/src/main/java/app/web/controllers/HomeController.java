@@ -10,7 +10,8 @@ public class HomeController {
 	
 	@GetMapping("/home")
 	public ModelAndView getHomePage(ModelAndView modelAndView) {
-		modelAndView.setViewName("homeTeplates/home");
+		modelAndView.setViewName("homeTemplates/home");
+	
 		return modelAndView;
 	}
 	

@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org">
+				
+    <th:block th:include="~{/fragments/head}"></th:block>
+       
+<body>
+
+	<th:block th:include="~{fragments/user-header}"></th:block>
+	
+<main class="container">
+    <h1 class="text-center">Merchant</h1>
+    <hr class="hr-3"/>
+    <table class="table bg-blur">
+        <thead>
+        <tr>
+            <th scope="col" class="font-weight-bold">Name</th>
+            <th scope="col">Slot</th>
+            <th scope="col">Stamina</th>
+            <th scope="col">Strength</th>
+            <th scope="col">Attack</th>
+            <th scope="col">Defence</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Relentless</td>
+            <td>PADS</td>
+            <td>25</td>
+            <td>22</td>
+            <td>0</td>
+            <td>60</td>
+            <td>
+                <form action="/items/merchant/Relentless" method="post">
+                <button class="btn btn-info">Buy</button>
+                </form>
+            </td>
+        </tr>
+        
+        </tbody>
+    </table>
+</main>
+       <th:block th:include="~{/fragments/footer}"></th:block>
+</body>
+</html>
