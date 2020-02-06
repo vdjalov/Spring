@@ -1,50 +1,26 @@
 
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Heroes</title>
-        <link rel="stylesheet" href="/css/reset-css.css">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/style.css">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org">
+				
+	 <th:block th:include="~{/fragments/head}"></th:block>			
+        
 <body>
-<header>
-    <header>
-        <nav class="navbar bg-dark navbar-expand-lg navbar-background bg-dark ">
-            <a class="navbar-brand text-white h4" href="/home">Heroes</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-                <ul class="navbar-nav row">
-                    <li class="nav-item mr-2">
-                        <a class="nav-link text-white active h5" href="/heroes/create">Create hero</a>
-                    </li>
-                    
-                    <li class="nav-item mr-2">
-                        <a class="nav-link text-white active h5" href="/items/create">Create Item</a>
-                    </li>
-                    
-                    
-                    <li class="nav-item mr-2">
-                        <a class="nav-link text-white active h5" href="/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-</header>
+
+	<th:block th:include="~{/fragments/user-header}"></th:block>
+
 <main>
     <div class="container">
         <h1 class="text-center">Create hero</h1>
-        <form class="mx-auto w-100 bg-blur" action="/heroes/create" method="post">
+        <form class="mx-auto w-100 bg-blur" th:action="@{/heroes/create}" method="post" th:object="${createHero}">
             <div class="form-group">
                 <div class="label-holder textCol d-flex justify-content-center">
                     <label for="name" class="h4 mb-2 text-white">Name</label>
                 </div>
-                <input type="text" class="form-control mx-auto w-25" id="name" name="name"/>
+                <input type="text" class="form-control mx-auto w-25" id="name" th:field="*{name}" name="name"/>
+                <ul th:if="${#fields.hasErrors('name')}">  
+			<li th:each="error : ${#fields.errors('name')}" th:text="${error}" style="color:red"></li>
+			</ul>
             </div>
             <div class="form-group">
                 <div class="row">
@@ -65,7 +41,7 @@
                         <div class="col col-md-6 ml-lg-5">
                             <h2 class="text-white">male</h2>
                             <label for="gender">
-                                <input type="radio" id="gender" class="ml-lg-5" value="male" name="gender">
+                                <input type="radio" id="gender" class="ml-lg-5" value="MALE" name="gender">
                             </label>
                         </div>
                     </div>
@@ -73,7 +49,7 @@
                         <div class="col col-md-6 ml-lg-5">
                             <h2 class="text-white">female</h2>
                             <label for="gender">
-                                <input type="radio" id="gender" class="ml-lg-5" value="female" name="gender">
+                                <input type="radio" id="gender" class="ml-lg-5" value="FEMALE" name="gender">
                             </label>
                         </div>
                     </div>
@@ -85,12 +61,8 @@
         </form>
     </div>
 </main>
-    <footer class="footer bg-dark  py-2">
-        <div class="container-fluid text-center">
-            <div class="footer-background h5 text-white">
-                &#169; CopyRight Victorious Arena. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    
+    <th:block th:include="~{/fragments/footer}"></th:block>
+    
 </body>
 </html>

@@ -11,7 +11,6 @@ public class RegisterItemServiceModel {
 	@NotEmpty(message = "Name cannot be empty")
 	private String name;
 	
-	@Min(value = 1)
 	private Slot slot;
 	
 	@Min(value = 1)

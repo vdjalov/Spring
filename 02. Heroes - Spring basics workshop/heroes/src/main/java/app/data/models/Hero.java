@@ -1,5 +1,6 @@
 package app.data.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,6 +31,9 @@ public class Hero extends BaseModel{
 	private int level;
 	
 	@Column()
+	private int strength;
+	
+	@Column()
 	private int stamina;
 	
 	@Column()
@@ -52,6 +56,7 @@ public class Hero extends BaseModel{
 
 
 	public Hero() {
+		this.inventory = new ArrayList<Item>();
 	}
 
 
@@ -132,6 +137,16 @@ public class Hero extends BaseModel{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+
+	public int getStrength() {
+		return strength;
+	}
+
+
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
 	
 	

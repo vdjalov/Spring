@@ -19,7 +19,6 @@ public class Item extends BaseModel {
 	private String name;
 	
 	@Enumerated(EnumType.STRING)
-	@Min(value = 1)
 	@Column()
 	private Slot slot;
 	

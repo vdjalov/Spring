@@ -1,5 +1,7 @@
 package app.web.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import app.service.ItemService;
 import app.service.models.RegisterItemServiceModel;
+import app.web.models.ItemViewModel;
 
 @Controller
 @RequestMapping(value = "/items")
@@ -49,8 +52,23 @@ public class ItemController {
 		
 		this.itemService.save(registerItemServiceModel);
 		
-		return new ModelAndView("itemTemplates/merchant");
+		return new ModelAndView("redirect:/items/merchant");
 	}
 	
 	
+	@GetMapping("/merchant")
+	public ModelAndView getMerchant(ModelAndView modelAndView) {
+		List<ItemViewModel> allItems = this.itemService.getAllItems();
+		modelAndView.addObject("items", allItems);
+		modelAndView.setViewName("itemTemplates/merchant");
+		return modelAndView;
+		
+	}
+	
 }
+
+
+
+
+
+

@@ -25,23 +25,26 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Relentless</td>
-            <td>PADS</td>
-            <td>25</td>
-            <td>22</td>
-            <td>0</td>
-            <td>60</td>
-            <td>
-                <form action="/items/merchant/Relentless" method="post">
-                <button class="btn btn-info">Buy</button>
-                </form>
-            </td>
-        </tr>
-        
+        <th:block th:each="item : ${items}">
+	        <tr>
+	            <td>[[${item.name}]]</td>
+	            <td>[[${item.slot}]]</td>
+	            <td>[[${item.stamina}]]</td>
+	            <td>[[${item.strength}]]</td>
+	            <td>[[${item.attack}]]</td>
+	            <td>[[${item.defence}]]</td>
+	            <td>
+	                <form th:action="@{/items/merchant/} + ${item.name}" method="post">
+	                <button class="btn btn-info">Buy</button>
+	                </form>
+	            </td>
+	        </tr>
+        </th:block>
         </tbody>
     </table>
 </main>
-       <th:block th:include="~{/fragments/footer}"></th:block>
+
+    <th:block th:include="~{/fragments/footer}"></th:block>
+    
 </body>
 </html>

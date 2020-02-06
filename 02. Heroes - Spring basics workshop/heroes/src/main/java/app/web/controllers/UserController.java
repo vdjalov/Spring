@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.service.HeroService;
 import app.service.UserService;
 import app.service.models.LoginUserServiceModel;
 import app.service.models.RegisterUserServiceModel;
+import app.web.models.HeroViewModel;
 
 
 @Controller
@@ -22,10 +24,12 @@ import app.service.models.RegisterUserServiceModel;
 public class UserController {
 
 	private UserService userService;
+	private HeroService heroService;
 	
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, HeroService heroService) {
 		this.userService = userService;
+		this.heroService = heroService;
 	}
 
 	@ModelAttribute("loginUser")
@@ -59,7 +63,7 @@ public class UserController {
 				try {
 					RegisterUserServiceModel registerUserServiceModel = this.userService.validateLogin(loginUserServiceModel);
 					if(registerUserServiceModel.getHero() != null) {
-						session.setAttribute("hero", registerUserServiceModel.getHero());
+						session.setAttribute("hero", registerUserServiceModel.getHero().getName());
 					}
 					
 				} catch (Exception e) {
@@ -96,4 +100,27 @@ public class UserController {
 			
 			return new ModelAndView("userTemplates/login");
 	}
+	
+	
+	@GetMapping("/profile")
+	public ModelAndView viewUserProfile(ModelAndView modelAndView, HttpSession session) {
+		
+		modelAndView.setViewName("userTemplates/profile");
+		HeroViewModel heroViewModel = this.heroService.getHero(session.getAttribute("hero").toString());
+		modelAndView.addObject("myHero", heroViewModel);
+		
+		return modelAndView;
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
