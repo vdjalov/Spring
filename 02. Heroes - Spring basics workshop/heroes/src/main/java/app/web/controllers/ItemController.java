@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,7 +52,6 @@ public class ItemController {
 		}
 		
 		this.itemService.save(registerItemServiceModel);
-		
 		return new ModelAndView("redirect:/items/merchant");
 	}
 	
@@ -65,7 +65,28 @@ public class ItemController {
 		
 	}
 	
+	
+	
+	@PostMapping("/merchant/{itemName}")
+	public ModelAndView getMerchant(@PathVariable String itemName) {
+		try {
+			itemService.findItemByNameAndAddToHeroInventory(itemName);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return new ModelAndView("redirect:/items/merchant");
+	}
 }
+
+
+
+
+
+
+
+
+
 
 
 

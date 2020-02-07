@@ -6,19 +6,22 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.error.userErros.UserException;
 import app.service.HeroService;
 import app.service.UserService;
 import app.service.models.LoginUserServiceModel;
 import app.service.models.RegisterUserServiceModel;
 import app.web.models.HeroViewModel;
 
-
+@ControllerAdvice
 @Controller
 @RequestMapping(value = "/users")
 public class UserController {
@@ -56,24 +59,24 @@ public class UserController {
 	public ModelAndView logInUser(@Valid @ModelAttribute("loginUser") LoginUserServiceModel loginUserServiceModel, 
 			BindingResult bindingResult, HttpSession session) {
 			
-			if(bindingResult.hasErrors()) {
-				return new ModelAndView("userTemplates/login");
-			} 
-			
-				try {
-					RegisterUserServiceModel registerUserServiceModel = this.userService.validateLogin(loginUserServiceModel);
-					if(registerUserServiceModel.getHero() != null) {
-						session.setAttribute("hero", registerUserServiceModel.getHero().getName());
-					}
-					
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
-					return new ModelAndView("userTemplates/login");
-				}
-			
-			session.setAttribute("username", loginUserServiceModel.getUsername());
+		if(bindingResult.hasErrors()) {
+			return new ModelAndView("userTemplates/login");
+		} 
 		
-			return new ModelAndView("redirect:/home");
+			try {
+				RegisterUserServiceModel registerUserServiceModel = this.userService.validateLogin(loginUserServiceModel);
+				if(registerUserServiceModel.getHero() != null) {
+					session.setAttribute("hero", registerUserServiceModel.getHero().getName());
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return new ModelAndView("userTemplates/login");
+			}
+		
+		session.setAttribute("username", loginUserServiceModel.getUsername());
+	
+		return new ModelAndView("redirect:/home");
 	}
 	
 	@GetMapping("/register")
@@ -85,20 +88,20 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public ModelAndView createUser(@Valid @ModelAttribute("registerUser") RegisterUserServiceModel registerUserServiceModel, 
-				BindingResult bindingResult) {
-			
-			if(bindingResult.hasErrors()) {
-				return new ModelAndView("userTemplates/register");
-			}
-			
-			try {
-				userService.save(registerUserServiceModel);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("userTemplates/register");
-			}
-			
-			return new ModelAndView("userTemplates/login");
+				BindingResult bindingResult) throws UserException {
+		
+		if(bindingResult.hasErrors()) {
+			return new ModelAndView("userTemplates/register");
+		}
+		
+//		try {
+			userService.save(registerUserServiceModel);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			return new ModelAndView("userTemplates/register");
+//		}
+		
+		return new ModelAndView("userTemplates/login");
 	}
 	
 	
@@ -111,6 +114,17 @@ public class UserController {
 		
 		return modelAndView;
 	}
+	
+	
+	@ExceptionHandler(value = {UserException.class})
+	public ModelAndView handleDbExceptions(Exception e) {
+	
+		ModelAndView modelAndView = new ModelAndView("errorTemplates/user-register-error");
+		modelAndView.addObject("message", e.getMessage());
+		
+		return modelAndView;
+	}
+	
 	
 	
 }

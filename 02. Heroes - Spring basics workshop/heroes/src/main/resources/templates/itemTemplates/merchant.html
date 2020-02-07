@@ -34,8 +34,8 @@
 	            <td>[[${item.attack}]]</td>
 	            <td>[[${item.defence}]]</td>
 	            <td>
-	                <form th:action="@{/items/merchant/} + ${item.name}" method="post">
-	                <button class="btn btn-info">Buy</button>
+	                <form th:action="@{/items/merchant/} + ${item.name}" th:method="post">
+	                	<button th:onclick="myFunction(this)" class="btn btn-info">Buy</button> 
 	                </form>
 	            </td>
 	        </tr>
@@ -43,7 +43,11 @@
         </tbody>
     </table>
 </main>
-
+		<script>
+          function myFunction(button) {
+        	  button.style.display = "none";  // If we refresh it goes back to normal we need to delete/mark it in DB 
+          }
+        </script>
     <th:block th:include="~{/fragments/footer}"></th:block>
     
 </body>

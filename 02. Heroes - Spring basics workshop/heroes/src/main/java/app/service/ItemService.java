@@ -10,4 +10,5 @@ public interface ItemService {
 
 	public void save(RegisterItemServiceModel registerItemServiceModel);
 	public List<ItemViewModel> getAllItems();
+	public void findItemByNameAndAddToHeroInventory(String itemName) throws Exception;
 }

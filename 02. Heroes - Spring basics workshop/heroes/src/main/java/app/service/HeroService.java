@@ -7,6 +7,6 @@ public interface HeroService {
 
 	void save(CreateHeroServiceModel createHeroServiceModel);
 	HeroViewModel getHero(String username);
-	
+
 	
 }
