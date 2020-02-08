@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import app.error.userErros.UserException;
+import app.error.userError.UserException;
 import app.service.HeroService;
 import app.service.UserService;
 import app.service.models.LoginUserServiceModel;
@@ -57,22 +57,22 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public ModelAndView logInUser(@Valid @ModelAttribute("loginUser") LoginUserServiceModel loginUserServiceModel, 
-			BindingResult bindingResult, HttpSession session) {
+			BindingResult bindingResult, HttpSession session) throws Exception {
 			
 		if(bindingResult.hasErrors()) {
 			return new ModelAndView("userTemplates/login");
 		} 
 		
-			try {
+//			try {
 				RegisterUserServiceModel registerUserServiceModel = this.userService.validateLogin(loginUserServiceModel);
 				if(registerUserServiceModel.getHero() != null) {
 					session.setAttribute("hero", registerUserServiceModel.getHero().getName());
 				}
 				
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("userTemplates/login");
-			}
+//			} catch (Exception e) {
+//				System.out.println(e.getMessage());
+//				return new ModelAndView("userTemplates/login");
+//			}
 		
 		session.setAttribute("username", loginUserServiceModel.getUsername());
 	

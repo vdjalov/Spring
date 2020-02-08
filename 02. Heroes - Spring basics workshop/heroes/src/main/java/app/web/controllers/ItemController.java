@@ -51,7 +51,12 @@ public class ItemController {
 			return new ModelAndView("/itemTemplates/create-item");
 		}
 		
-		this.itemService.save(registerItemServiceModel);
+		try {
+			this.itemService.save(registerItemServiceModel);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("/itemTemplates/create-item");
+		}
 		return new ModelAndView("redirect:/items/merchant");
 	}
 	

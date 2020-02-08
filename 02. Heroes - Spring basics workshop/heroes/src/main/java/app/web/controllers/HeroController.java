@@ -55,7 +55,13 @@ public class HeroController {
 			return new ModelAndView("heroTemplates/create-hero");
 		}
 		
-		this.heroService.save(createHeroServiceModel);
+		try {
+			this.heroService.save(createHeroServiceModel);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("heroTemplates/create-hero");
+		}
+		
 		session.setAttribute("hero", createHeroServiceModel.getName());
 		return new ModelAndView("redirect:/home");
 		

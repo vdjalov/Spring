@@ -33,13 +33,18 @@ public class HeroServiceImpl implements HeroService {
 
 	
 	@Override
-	public void save(CreateHeroServiceModel createHeroServiceModel) {
-		Hero hero = this.modelMapper.map(createHeroServiceModel, Hero.class);  // Optional hero to be checked if unique agains all heroes
+	public void save(CreateHeroServiceModel createHeroServiceModel) throws Exception {
+			if(this.heroRepository.findByName(createHeroServiceModel.getName()).isPresent()) {
+				throw new Exception("Hero already exists!");
+			}
+		
+		Hero hero = this.modelMapper.map(createHeroServiceModel, Hero.class);  // Optional hero to be checked if unique against all heroes
 		User user = this.userRepository.findByUsername(this.session.getAttribute("username").toString()).get();
 		hero.setUser(user);
 		this.heroRepository.save(hero);
 	}
 
+	
 	@Override
 	public HeroViewModel getHero(String name) {
 		Hero hero = this.heroRepository.findByName(name).get();

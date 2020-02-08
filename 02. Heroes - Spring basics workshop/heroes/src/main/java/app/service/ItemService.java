@@ -8,7 +8,7 @@ import app.web.models.ItemViewModel;
 
 public interface ItemService {
 
-	public void save(RegisterItemServiceModel registerItemServiceModel);
+	public void save(RegisterItemServiceModel registerItemServiceModel) throws Exception;
 	public List<ItemViewModel> getAllItems();
 	public void findItemByNameAndAddToHeroInventory(String itemName) throws Exception;
 }

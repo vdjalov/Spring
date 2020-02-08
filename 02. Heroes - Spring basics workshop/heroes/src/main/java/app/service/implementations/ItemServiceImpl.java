@@ -36,16 +36,21 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public void save(RegisterItemServiceModel registerItemServiceModel) {
+	public void save(RegisterItemServiceModel registerItemServiceModel) throws Exception {
+		if(this.itemRepository.findByName(registerItemServiceModel.getName()).isPresent()) {
+			throw new Exception("Item with such name already exists");
+		}
+		
 		Item item = this.modelMapper.map(registerItemServiceModel, Item.class);
 		this.itemRepository.save(item);
 	}
 
 	@Override
 	public List<ItemViewModel> getAllItems() {
-		List<ItemViewModel> allItems = this.itemRepository.findAll().stream()
-														  .map(item -> this.modelMapper.map(item, ItemViewModel.class))
-														  .collect(Collectors.toList());
+		List<ItemViewModel> allItems = this.itemRepository
+											.findAll().stream()
+							   			    .map(item -> this.modelMapper.map(item, ItemViewModel.class))
+											.collect(Collectors.toList());
 		return allItems;
 	}
 

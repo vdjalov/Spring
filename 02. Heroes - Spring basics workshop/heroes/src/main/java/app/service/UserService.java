@@ -2,7 +2,7 @@ package app.service;
 
 import javax.validation.Valid;
 
-import app.error.userErros.UserException;
+import app.error.userError.UserException;
 import app.service.models.LoginUserServiceModel;
 import app.service.models.RegisterUserServiceModel;
 
