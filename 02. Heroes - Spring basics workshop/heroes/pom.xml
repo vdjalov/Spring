@@ -70,6 +70,10 @@
             <artifactId>commons-codec</artifactId>
             <version>1.4</version>
         </dependency>
+    	<dependency>
+    		<groupId>org.junit.vintage</groupId>
+    		<artifactId>junit-vintage-engine</artifactId>
+    	</dependency>
 	</dependencies>
 
 	<build>

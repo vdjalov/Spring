@@ -1,5 +1,7 @@
 package app.service.implementations;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Service;
 import app.data.models.User;
 import app.data.repositories.UserRepository;
 import app.error.userError.UserException;
-import app.hashing.HashingService;
+import app.service.HashingService;
 import app.service.UserService;
 import app.service.models.LoginUserServiceModel;
 import app.service.models.RegisterUserServiceModel;
@@ -64,7 +66,8 @@ public class UserServiceImpl implements UserService {
 	public RegisterUserServiceModel validateLogin(@Valid LoginUserServiceModel loginUserServiceModel) throws UserException {
 		String username = loginUserServiceModel.getUsername();
 		String password = this.hashingService.hashPassword(loginUserServiceModel.getPassword());
-			if(this.userRepository.findByUsernameAndPassword(username, password).isPresent()) {
+		Optional<User> user = this.userRepository.findByUsernameAndPassword(username, password);
+			if(user.isPresent()) {
 				return this.modelMapper.map(this.userRepository.findByUsernameAndPassword(username, password).get(), RegisterUserServiceModel.class);
 			} else {
 				throw new UserException("Username or password invalid.");
