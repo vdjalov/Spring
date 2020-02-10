@@ -9,12 +9,10 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import app.data.models.User;
 import app.data.repositories.UserRepository;
@@ -27,10 +25,7 @@ import app.service.models.LoginUserServiceModel;
 import app.service.models.RegisterUserServiceModel;
 
 
-
-
 @SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
 class UserServiceTest {
 	
 	@Mock UserRepository userRepository;
@@ -46,7 +41,6 @@ class UserServiceTest {
 		userService = new UserServiceImpl(userRepository, modelMapper, hashingService);
 		
 	}
-	
 	
 	
 	@Test
@@ -65,6 +59,7 @@ class UserServiceTest {
 		assertThat(user.getUsername()).isEqualTo(userRepository.save(user).getUsername());
 		
 	}
+	
 	
 	@Test()
 	void testSaveUserNoHeroWrongPassword() {
@@ -107,6 +102,7 @@ class UserServiceTest {
 		
 	}
 	
+	
 	@Test()
 	void testLoginUserNoHeroDuplicateUsername() {
 		String username = "vlad";
@@ -128,6 +124,7 @@ class UserServiceTest {
 		assertTrue(thrown);
 	}
 	
+	
 	@Test()
 	void testLoginUserNoHeroSuccessfulLoginUsername() {
 		String username = "vlad";
@@ -146,15 +143,13 @@ class UserServiceTest {
 		
 			try {				
 				userService.validateLogin(loginUserServiceModel);
-				System.out.println("IN");
 			} catch (Exception e) {
 				thrown = false;
 			}
-			System.out.println(thrown);
+			
 		assertTrue(thrown);
-		
 	}
-
+	
 }
 
 
