@@ -28,10 +28,10 @@ public class ItemServiceImpl implements ItemService{
 	private HttpSession session;
 	
 	@Autowired
-	public ItemServiceImpl(ItemRepository itemRepository, HeroRepository heroRepository, ModelMapper modleMapper, HttpSession session) {
+	public ItemServiceImpl(ItemRepository itemRepository, HeroRepository heroRepository, ModelMapper modelMapper, HttpSession session) {
 		this.itemRepository = itemRepository;
 		this.heroRepository = heroRepository;
-		this.modelMapper = modleMapper;
+		this.modelMapper = modelMapper;
 		this.session = session;
 	}
 
