@@ -1,7 +1,10 @@
 package app;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.Optional;
 
@@ -63,7 +66,7 @@ public class ItemServiceTest {
 	
 	
 	@Test
-	void testSaveItemFunctionality() {
+	void testSaveItemFunctionality() throws Exception {
 		Item item = new Item();
 		item.setAttack(1);
 		item.setDefence(1);
@@ -75,11 +78,14 @@ public class ItemServiceTest {
 		Mockito.when(itemRepository.findByName(Mockito.anyString()))
 			   .thenReturn(null);
 		
-		Mockito.when(itemRepository.save(item))
-				.thenReturn(item);
+		Mockito.when(itemRepository.save(Mockito.any()))
+		   .thenReturn(item);
 		
+		itemService.save(new RegisterItemServiceModel());
 		
-		assertEquals("saved",itemRepository.save(item).getName(), "ok");
+		verify(itemRepository, times(1)).save(Mockito.any(Item.class)); // verify save method was invoked 
+	
+		assertEquals("saved",itemRepository.save(item).getName(), "ok"); // Result as it should be
 	}
 	
 	
