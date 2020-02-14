@@ -1,5 +1,7 @@
 package app.service.implementations;
 
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import app.data.repositories.UserRepository;
 import app.service.UserService;
 import app.service.models.ValidateLoginServiceModel;
 import app.service.models.ValidateUserRegisterModel;
+import app.web.models.UserViewModel;
 
 
 @Service
@@ -55,10 +58,21 @@ public class UserServiceIml implements UserService {
 		return true;
 	}
 
-	
-	
+//	Validate password
 	private boolean validatePasswords(String password, String confirmPassword) {
 		return password.equals(confirmPassword);
+	}
+
+	
+	@Override
+	public Optional<User> checkIfUserHaveAhero(String username) {
+		return this.userRepository.findByUsername(username);
+	}
+
+	@Override
+	public UserViewModel findByUsername(String username) {
+		return this.modelMapper.map(this.userRepository.findByUsername(username).get(), UserViewModel.class);
+		
 	}
 
 	

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import app.service.UserService;
 import app.service.models.ValidateLoginServiceModel;
 import app.service.models.ValidateUserRegisterModel;
+import app.web.models.UserViewModel;
 
 @Controller
 @RequestMapping(value = "/users")
@@ -78,7 +79,12 @@ public class UserController {
 			return new ModelAndView("userTemplates/login");
 		}
 		
-		session.setAttribute("user", user);
+		
+		this.session.setAttribute("user", user);
+		if(this.userService.checkIfUserHaveAhero(validateLoginServiceModel.getUsername()).get().getHero() != null) {
+			this.session.setAttribute("hero", this.userService.checkIfUserHaveAhero(validateLoginServiceModel.getUsername()).get().getHero());
+		}
+		
 		return new ModelAndView("redirect:/home");
 	}
 	
@@ -90,6 +96,14 @@ public class UserController {
 	}
 	
 	
+	@GetMapping("/profile")
+	public ModelAndView getUserProfile(ModelAndView modelAndView) {
+		modelAndView.setViewName("userTemplates/profile");
+		String username = ((ValidateLoginServiceModel) this.session.getAttribute("user")).getUsername();
+		UserViewModel userViewModel = this.userService.findByUsername(username);
+		modelAndView.addObject("myUser", userViewModel);
+		return modelAndView;
+	}
 	
 	
 	
