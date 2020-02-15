@@ -1,28 +1,22 @@
-package app.data.models;
+package app.service.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import app.data.models.enums.Slot;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "items")
-public class Item extends BaseEntity {
+@NoArgsConstructor
+public class ValidateCreateItemModel {
 
+	
 	@NotEmpty(message = "name cannot be empty")
 	private String name;
 	
-	@NotNull(message = "slot cannot be empty")
+	@NotNull(message = "you have to choose armor or weapon")
 	@Enumerated(EnumType.STRING)
 	private Slot slot;
 	
@@ -37,13 +31,6 @@ public class Item extends BaseEntity {
 	
 	@Min(value = 0, message = "stamina cannot be 0(zero)")
 	private int defence;
-	
-	@ManyToMany(targetEntity = Hero.class, mappedBy = "inventory", cascade = CascadeType.ALL)
-	private List<Hero> heroes;
-
-	public Item() {
-		this.heroes = new ArrayList<Hero>();
-	}
 
 	public String getName() {
 		return name;
@@ -92,14 +79,7 @@ public class Item extends BaseEntity {
 	public void setDefence(int defence) {
 		this.defence = defence;
 	}
-
-	public List<Hero> getHeroes() {
-		return heroes;
-	}
-
-	public void setHeroes(List<Hero> heroes) {
-		this.heroes = heroes;
-	}
+	
 	
 	
 	

@@ -63,7 +63,6 @@ public class UserServiceIml implements UserService {
 		return password.equals(confirmPassword);
 	}
 
-	
 	@Override
 	public Optional<User> checkIfUserHaveAhero(String username) {
 		return this.userRepository.findByUsername(username);
