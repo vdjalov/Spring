@@ -32,8 +32,8 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="password" class="h4 mb-2">Password</label>
             </div>
-              <ul th:if="${#fields.hasErrors('password')}">  
-			<li th:each="error : ${#fields.errors('password')}" th:text="${error}" style="color:red"></li>
+              <ul th:if="${#fields.hasGlobalErrors()}">  
+			<li th:each="error : ${#fields.errors('global')}" th:text="${error}" style="color:red"></li>
 			</ul>
             <input type="password" class="form-control" id="password" name="password" th:field=*{password}/>
         </div>
@@ -41,8 +41,8 @@
             <div class="label-holder text-white textCol d-flex justify-content-center">
                 <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
             </div>
-             <ul th:if="${#fields.hasErrors('confirmPassword')}">  
-			<li th:each="error : ${#fields.errors('confirmPassword')}" th:text="${error}" style="color:red"></li>
+             <ul th:if="${#fields.hasErrors('global')}">  
+			<li th:each="error : ${#fields.errors('global')}" th:text="${error}" style="color:red"></li>
 			</ul>
             <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" th:field=*{confirmPassword}/>
         </div>

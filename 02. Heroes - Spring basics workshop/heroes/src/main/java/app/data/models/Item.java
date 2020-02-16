@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,6 +38,9 @@ public class Item extends BaseEntity {
 	
 	@Min(value = 0, message = "stamina cannot be 0(zero)")
 	private int defence;
+	
+	@Column(updatable = true)
+	private boolean isOwned;
 	
 	@ManyToMany(targetEntity = Hero.class, mappedBy = "inventory", cascade = CascadeType.ALL)
 	private List<Hero> heroes;
@@ -99,6 +103,14 @@ public class Item extends BaseEntity {
 
 	public void setHeroes(List<Hero> heroes) {
 		this.heroes = heroes;
+	}
+
+	public boolean isOwned() {
+		return isOwned;
+	}
+
+	public void setOwned(boolean isOwned) {
+		this.isOwned = isOwned;
 	}
 	
 	

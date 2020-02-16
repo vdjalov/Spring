@@ -1,11 +1,15 @@
 package app.service.models;
 
 import javax.persistence.Column;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import app.validation.FieldMatch;
 import lombok.NoArgsConstructor;
-
+@FieldMatch.List({
+    @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
+})
 @NoArgsConstructor
 public class ValidateUserRegisterModel {
 	
