@@ -24,20 +24,24 @@
    </th:block>
    
    <th:block th:if="${session.user != null && session.hero != null}">
-   		<div class="text-center mb-3">
-        	<h4 class="text-white mt-2">Welcome to the arena, [[${session.user.username}]]</h4>
+	    <div class="text-center mb-3">
+	        <h4 class="text-white mt-2">Welcome to the arena, [[${session.user.username}]]</h4>
 	    </div>
-	    	<hr class="my-3"/>
+	    <hr class="my-3"/>
 	    <div class="container">
-        
-        <div class="text-center">
-            <h2>User, you have a hero. Buy items to make your hero stronger and later join the battle.</h2>
-        </div>
-    	</div>
+	        <div class="text-center">   
+                <div class="row flex-md-row">
+                  <th:block th:each="hero : ${allHeroes}">      
+                    <div class="col text-center">
+                        <img th:src="'/img/' + ${hero.gender} + '.jpg'" width="150">
+                        <h2 class="text-white">[[${hero.name}]]</h2>
+                        <a class="btn btn-secondary" th:href="'/heroes/fight/' + ${hero.name}">Fight</a>
+                    </div>
+                   </th:block>
+                </div>
+	        </div>
+	    </div>
    </th:block>
-   
-   
-   
 </main>
  <th:block th:include="~{fragments/footer}"></th:block>
 </body>

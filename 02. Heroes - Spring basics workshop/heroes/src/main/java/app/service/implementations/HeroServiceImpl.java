@@ -1,5 +1,8 @@
 package app.service.implementations;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import app.service.HeroService;
 import app.service.models.ValidateCreateHeroModel;
 import app.service.models.ValidateLoginServiceModel;
 import app.service.session.SessionService;
+import app.web.models.HeroFightViewModel;
 import app.web.models.HeroViewModel;
 
 @Service
@@ -45,6 +49,48 @@ public class HeroServiceImpl implements HeroService {
 	@Override
 	public HeroViewModel findHeroByName(String heroName) {
 		return this.modelMapper.map(this.heroRepository.findByName(heroName).get(), HeroViewModel.class);
+	}
+
+	@Override
+	public List<HeroViewModel> getAllHeroes() {
+		String heroName = ((ValidateCreateHeroModel) this.sessionService.getSessionAttribute("hero")).getName();
+		return this.heroRepository.findAll().stream()
+					.filter(hero-> !hero.getName().equals(heroName))
+					.map(hero -> this.modelMapper.map(hero, HeroViewModel.class))
+					.collect(Collectors.toList());
+	}
+
+	@Override
+	public HeroFightViewModel fightHeroes(String enemyHeroName) {
+		String myHeroName =  ((ValidateCreateHeroModel) this.sessionService.getSessionAttribute("hero")).getName();
+		Hero myHero = this.heroRepository.findByName(myHeroName).get();
+		Hero enemyHero = this.heroRepository.findByName(enemyHeroName).get();
+		
+		return claculateWinnerAndReturnFightDeatils(myHero, enemyHero);
+	}
+
+	private HeroFightViewModel claculateWinnerAndReturnFightDeatils(Hero myHero, Hero enemyHero) {
+	
+		int winner = (myHero.getAttack() + (myHero.getStrength() * 4)) - (enemyHero.getDefence() + (enemyHero.getStamina() * 2));
+		HeroFightViewModel heroFightViewModel = new HeroFightViewModel();
+			if(winner >= 0) {
+				myHero.setLevel(myHero.getLevel() + 1);
+				myHero.setStamina(myHero.getStamina() + 5);
+				myHero.setStrength(myHero.getStrength() + 5);
+				this.heroRepository.save(myHero);
+				heroFightViewModel.setWinnerName(myHero.getName());
+			} else {
+				enemyHero.setLevel(enemyHero.getLevel() + 1);
+				enemyHero.setStamina(enemyHero.getStamina() + 5);
+				enemyHero.setStrength(enemyHero.getStrength() + 5);
+				this.heroRepository.save(enemyHero);
+				heroFightViewModel.setWinnerName(enemyHero.getName());
+			}
+		heroFightViewModel.setEnemyHeroGender(enemyHero.getGender());
+		heroFightViewModel.setEnemyHeroName(enemyHero.getName());
+		heroFightViewModel.setUserHeroGender(myHero.getGender());
+		heroFightViewModel.setUserHeroName(myHero.getName());	
+		return heroFightViewModel;
 	}
 
 	

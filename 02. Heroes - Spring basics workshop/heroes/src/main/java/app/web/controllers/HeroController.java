@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import app.service.HeroService;
 import app.service.models.ValidateCreateHeroModel;
+import app.web.models.HeroFightViewModel;
 import app.web.models.HeroViewModel;
 
 @Controller
@@ -77,6 +78,18 @@ public class HeroController {
 		modelAndView.setViewName("heroTemplates/heroDetails");
 		return modelAndView;
 	}
+	
+	
+	@GetMapping("/fight/{enemyHeroName}")
+	public ModelAndView getFightView(@PathVariable("enemyHeroName") String enemyHeroName, ModelAndView modelAndView) {
+		modelAndView.setViewName("heroTemplates/fight");
+		
+		HeroFightViewModel heroFightViewModel = this.heroService.fightHeroes(enemyHeroName);
+		modelAndView.addObject("fightDetails", heroFightViewModel);
+		
+		return modelAndView;
+	}
+	
 }
 
 

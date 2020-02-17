@@ -12,6 +12,7 @@ import app.data.models.Item;
 import app.data.repositories.HeroRepository;
 import app.data.repositories.ItemRepository;
 import app.service.ItemService;
+import app.service.models.ValidateCreateHeroModel;
 import app.service.models.ValidateCreateItemModel;
 import app.service.session.SessionService;
 import app.web.models.ItemViewModel;
@@ -51,16 +52,33 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public void buyItem(String name) {
-		String heroName = ((Hero) this.session.getSessionAttribute("hero")).getName();
+		String heroName = ((ValidateCreateHeroModel) this.session.getSessionAttribute("hero")).getName();
 		Item item = this.itemRepository.findByName(name).get();
 		Hero hero = this.heroRepository.findByName(heroName).get();
-		hero.getInventory().add(item);
+		hero = addItem(hero, item);
+		
+		
 		item.setOwned(true);
-		
-		
 		
 		this.itemRepository.save(item); // updating owned column
 		this.heroRepository.save(hero); // updating hero 
+	}
+
+
+//	calculates hero stats
+	private Hero addItem(Hero hero, Item item) {
+		List<Item> updatedInventory = hero.getInventory()
+										 .stream()
+										 .filter(currentItem -> !currentItem.getSlot().toString().equals(item.getSlot().toString()))
+										 .collect(Collectors.toList());
+		updatedInventory.add(item);
+		hero.setInventory(updatedInventory);
+		hero.setAttack(updatedInventory.stream().mapToInt(i -> item.getAttack()).sum());
+		hero.setDefence(updatedInventory.stream().mapToInt(i -> item.getDefence()).sum());
+		hero.setStamina(updatedInventory.stream().mapToInt(i -> item.getStamina()).sum());
+		hero.setStrength(updatedInventory.stream().mapToInt(i -> item.getStrength()).sum());
+		
+		return hero;
 	}
 
 	

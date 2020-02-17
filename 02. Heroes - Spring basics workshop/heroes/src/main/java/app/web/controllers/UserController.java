@@ -3,6 +3,7 @@ package app.web.controllers;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import app.service.UserService;
+import app.service.models.ValidateCreateHeroModel;
 import app.service.models.ValidateLoginServiceModel;
 import app.service.models.ValidateUserRegisterModel;
 import app.web.models.UserViewModel;
@@ -23,11 +25,13 @@ public class UserController {
 	
 	private UserService userService;
 	private HttpSession session;
+	private ModelMapper modelMapper;
 	
 	@Autowired
-	public UserController(UserService userService, HttpSession session) {
+	public UserController(UserService userService, HttpSession session, ModelMapper modelMapper) {
 		this.userService = userService;
 		this.session = session;
+		this.modelMapper = modelMapper;
 	}
 
 
@@ -82,7 +86,9 @@ public class UserController {
 		
 		this.session.setAttribute("user", user);
 		if(this.userService.checkIfUserHaveAhero(validateLoginServiceModel.getUsername()).get().getHero() != null) {
-			this.session.setAttribute("hero", this.userService.checkIfUserHaveAhero(validateLoginServiceModel.getUsername()).get().getHero());
+			ValidateCreateHeroModel validateCreateHeroModel = 
+					this.modelMapper.map( this.userService.checkIfUserHaveAhero(validateLoginServiceModel.getUsername()).get().getHero(), ValidateCreateHeroModel.class);
+			this.session.setAttribute("hero", validateCreateHeroModel);
 		}
 		
 		return new ModelAndView("redirect:/home");
