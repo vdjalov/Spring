@@ -64,12 +64,12 @@ public class HeroServiceImpl implements HeroService {
 	public HeroFightViewModel fightHeroes(String enemyHeroName) {
 		String myHeroName =  ((ValidateCreateHeroModel) this.sessionService.getSessionAttribute("hero")).getName();
 		Hero myHero = this.heroRepository.findByName(myHeroName).get();
-		Hero enemyHero = this.heroRepository.findByName(enemyHeroName).get();
+		Hero enemyHero = this.heroRepository.findByName("two").get();
 		
-		return claculateWinnerAndReturnFightDeatils(myHero, enemyHero);
+		return claculateWinnerAndReturnFightDetails(myHero, enemyHero);
 	}
 
-	private HeroFightViewModel claculateWinnerAndReturnFightDeatils(Hero myHero, Hero enemyHero) {
+	private HeroFightViewModel claculateWinnerAndReturnFightDetails(Hero myHero, Hero enemyHero) {
 	
 		int winner = (myHero.getAttack() + (myHero.getStrength() * 4)) - (enemyHero.getDefence() + (enemyHero.getStamina() * 2));
 		HeroFightViewModel heroFightViewModel = new HeroFightViewModel();

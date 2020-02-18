@@ -1,5 +1,6 @@
 package app.service.models;
 
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
@@ -12,6 +13,7 @@ import app.data.models.enums.Gender;
 public class ValidateCreateHeroModel {
 
 	@NotEmpty(message = "name cannot be empty")
+	@Column(unique = true)
 	private String name;
 	
 	@NotNull(message = "gender cannot be empty")
