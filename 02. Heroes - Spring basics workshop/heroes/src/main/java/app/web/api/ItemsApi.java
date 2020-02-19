@@ -1,5 +1,4 @@
 package app.web.api;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,8 @@ public class ItemsApi {
     public ResponseEntity<List<ItemViewModel>>getAllItems() {
     	List<ItemViewModel> allItems = this.itemsService.getAllItems();
     	
-    	return new ResponseEntity<>(allItems, HttpStatus.OK);
+		return new ResponseEntity<List<ItemViewModel>>(allItems, HttpStatus.OK);
+    	
     }
 	
     
