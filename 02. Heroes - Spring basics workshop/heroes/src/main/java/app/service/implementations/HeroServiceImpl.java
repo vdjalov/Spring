@@ -64,7 +64,7 @@ public class HeroServiceImpl implements HeroService {
 	public HeroFightViewModel fightHeroes(String enemyHeroName) {
 		String myHeroName =  ((ValidateCreateHeroModel) this.sessionService.getSessionAttribute("hero")).getName();
 		Hero myHero = this.heroRepository.findByName(myHeroName).get();
-		Hero enemyHero = this.heroRepository.findByName("two").get();
+		Hero enemyHero = this.heroRepository.findByName(enemyHeroName).get();
 		
 		return claculateWinnerAndReturnFightDetails(myHero, enemyHero);
 	}

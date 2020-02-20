@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.exceptions.UserException;
 import app.service.UserService;
 import app.service.models.ValidateCreateHeroModel;
 import app.service.models.ValidateLoginServiceModel;
 import app.service.models.ValidateUserRegisterModel;
 import app.web.models.UserViewModel;
+
 
 @Controller
 @RequestMapping(value = "/users")
@@ -56,19 +58,19 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public ModelAndView registerUser(@Valid @ModelAttribute("registerUser")ValidateUserRegisterModel validateUserRegisterModel, 
-			BindingResult bindingResult) {
+			BindingResult bindingResult) throws Exception {
 		
-			boolean registrationIsValid = false;
-			try {
-				registrationIsValid = this.userService.validateRegistration(validateUserRegisterModel);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		
-			if(bindingResult.hasErrors() || !(registrationIsValid)) {
+			if(bindingResult.hasErrors()) {
 				return new ModelAndView("userTemplates/register");
 			}
-		
+			
+			boolean registrationIsValid = false;
+			registrationIsValid = this.userService.validateRegistration(validateUserRegisterModel);
+			
+			if(!registrationIsValid) {
+				return new ModelAndView("userTemplates/register");
+			}
+			
 			return new ModelAndView("redirect:/users/login");
 	}
 	

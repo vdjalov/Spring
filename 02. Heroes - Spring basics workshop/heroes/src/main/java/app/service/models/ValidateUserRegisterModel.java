@@ -21,7 +21,11 @@ public class ValidateUserRegisterModel {
 	@Pattern(regexp = "[a-zA-Z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "Incorrect email")
 	private String email;
 	
+	
+	@NotEmpty(message = "password cannot be empty")
 	private String password;
+	
+	@NotEmpty(message = "confirm password cannot be empty")
 	private String confirmPassword;
 	
 	
