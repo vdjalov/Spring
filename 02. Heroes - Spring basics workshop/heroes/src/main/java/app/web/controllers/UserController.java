@@ -81,7 +81,13 @@ public class UserController {
 		ValidateLoginServiceModel user = userService.save(validateLoginServiceModel);
 		
 		if(bindingResult.hasErrors() || user == null) {
-			return new ModelAndView("userTemplates/login");
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("userTemplates/login");
+			if(user == null) {
+				modelAndView.addObject("invalidCredentials", "Invalid username or password");
+			}
+			return modelAndView;
+			
 		}
 		
 		
