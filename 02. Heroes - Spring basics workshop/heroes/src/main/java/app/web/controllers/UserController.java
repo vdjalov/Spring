@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import app.exceptions.UserException;
 import app.service.UserService;
 import app.service.models.ValidateCreateHeroModel;
 import app.service.models.ValidateLoginServiceModel;
