@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.exceptions.UserException;
 import app.service.UserService;
 import app.service.models.ValidateCreateHeroModel;
 import app.service.models.ValidateLoginServiceModel;
@@ -81,13 +82,7 @@ public class UserController {
 		ValidateLoginServiceModel user = userService.save(validateLoginServiceModel);
 		
 		if(bindingResult.hasErrors() || user == null) {
-			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("userTemplates/login");
-			if(user == null) {
-				modelAndView.addObject("invalidCredentials", "Invalid username or password");
-			}
-			return modelAndView;
-			
+			return new ModelAndView("userTemplates/login");
 		}
 		
 		

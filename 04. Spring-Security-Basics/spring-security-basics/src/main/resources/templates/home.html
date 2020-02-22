@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<h1>THIS IS MY HOME PAGE</h1>
+
+<div sec:authorise="hasRole('ADMIN')">
+	<h2>You are an admin</h2>
+</div>
+
+<div sec:authorise="hasRole('USER')">
+	<h2>You are a USER</h2>
+</div>
+
+</body>
+</html>
