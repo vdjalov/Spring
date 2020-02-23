@@ -3,7 +3,7 @@
 				xmlns:th="http://www.thymeleaf.org"
 				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-<h1>THIS IS MY HOME PAGE</h1>
+<h1>THIS IS MY DETAILSSSSSSSS PAGE</h1>
 
 <div sec:authorize="hasAuthority('ADMIN')">
 	<h2>You are an ADMIN</h2>
@@ -12,8 +12,5 @@
 <div sec:authorize="hasAuthority('USER')">
 	<h2>You are a USER</h2>
 </div>
-<h3> Time: [[${time}]]</h3>
-
 
 </body>
-</html>

@@ -2,7 +2,10 @@ package app.web.controllers;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +29,9 @@ public class UserController {
 
 
 	@GetMapping("/home")
-	public ModelAndView getHome(ModelAndView modelAndView) {
+	public ModelAndView getHome(ModelAndView modelAndView, HttpSession session) {
 		modelAndView.setViewName("home");
+		modelAndView.addObject("time", session.getAttribute("time"));
 		return modelAndView;
 	}
 	
@@ -73,8 +77,18 @@ public class UserController {
 
 	}
 
+	@GetMapping("/details")
+	@PreAuthorize(value = "hasAuthority('ADMIN')")
+	public String getDetails(){
+	return "details";
 	
+	}
 	
+	@GetMapping("/unauthorized")
+	public String getUnauthorized(){
+	return "unauthorized";
+	
+	}
 }
 
 
