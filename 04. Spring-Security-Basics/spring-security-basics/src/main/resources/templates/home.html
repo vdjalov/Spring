@@ -5,11 +5,11 @@
 <body>
 <h1>THIS IS MY HOME PAGE</h1>
 
-<div sec:authorise="hasRole('ADMIN')">
-	<h2>You are an admin</h2>
+<div sec:authorize="hasAuthority('ADMIN')">
+	<h2>You are an ADMIN</h2>
 </div>
 
-<div sec:authorise="hasRole('USER')">
+<div sec:authorize="hasAuthority('USER')">
 	<h2>You are a USER</h2>
 </div>
 

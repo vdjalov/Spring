@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseEntity implements GrantedAuthority{
+public class Role extends BaseEntity implements GrantedAuthority {
 
 	@Column
 	private String authority;

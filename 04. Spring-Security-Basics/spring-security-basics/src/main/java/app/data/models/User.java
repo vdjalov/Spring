@@ -16,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails {
@@ -43,7 +44,18 @@ public class User extends BaseEntity implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
 
+
+	@Override
+	public String getUsername() {
+		return this.username;
+	}
 
 	public void setAuthorities(Set<Role> authorities) {
 		this.authorities = authorities;
@@ -55,17 +67,6 @@ public class User extends BaseEntity implements UserDetails {
 		return authorities;
 	}
 
-
-	@Override
-	public String getPassword() {
-		return this.username;
-	}
-
-
-	@Override
-	public String getUsername() {
-		return this.password;
-	}
 
 
 	@Override
@@ -94,8 +95,6 @@ public class User extends BaseEntity implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-
-	
 	
 	
 }

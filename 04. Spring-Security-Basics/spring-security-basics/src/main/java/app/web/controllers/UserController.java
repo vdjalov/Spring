@@ -32,14 +32,14 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/users/register")
+	@GetMapping("/register")
 	public ModelAndView getRegisterView(ModelAndView modelAndView) {
 		modelAndView.setViewName("register");
 		return modelAndView;
 	}
 	
 	
-	@PostMapping("/users/register")
+	@PostMapping("/register")
 	public ModelAndView registerUser(@ModelAttribute UserRegisterModel userRegisterModel, ModelAndView modelAndView) {
 		if(!userRegisterModel.getPassword().equals(userRegisterModel.getConfirmPassword())) {
 			return new ModelAndView("redirect:/users/register");
@@ -56,7 +56,7 @@ public class UserController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/users/login")
+	@GetMapping("/login")
 	public ModelAndView getLoginPage(@RequestParam(required = false) String error, ModelAndView modelAndView, Model model) {
 		if(error != null) {
 			model.addAttribute("error", "Error");

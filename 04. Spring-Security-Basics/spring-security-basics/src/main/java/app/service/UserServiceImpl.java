@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import app.data.repository.UserRepository;
 import app.service.models.UserRegisterModel;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
 	private RoleService roleService;
@@ -39,7 +38,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return this.userRepository.findByUsername(username);
+		User user = userRepository.findByUsername(username);
+		
+		return new org.springframework.security.core.userdetails.User(
+				user.getUsername(), user.getPassword(), user.getAuthorities());
 	}
 
 
@@ -55,8 +57,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			user.setAuthorities(new HashSet<>(Set.of(this.roleRepository.findByAuthority("USER"))));
 		}
 		
-		String myPassword = this.passwordEncoder.encode(user.getPassword());
-		user.setPassword(myPassword); 
+		String encodedPassword = this.passwordEncoder.encode(user.getPassword());
+		
+		user.setPassword(encodedPassword); 
 		return this.userRepository.save(user);
 	}
 
