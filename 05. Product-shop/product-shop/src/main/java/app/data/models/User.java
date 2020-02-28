@@ -16,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails{
@@ -52,6 +53,12 @@ public class User extends BaseEntity implements UserDetails{
 		return this.authorities;
 	}
 
+
+	public void setAuthorities(Set<Role> authorities) {
+		this.authorities = authorities;
+	}
+	
+	
 	@Override
 	public String getUsername() {
 		return this.email;
@@ -80,6 +87,9 @@ public class User extends BaseEntity implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
+
+	
+
 	
 	
 	
