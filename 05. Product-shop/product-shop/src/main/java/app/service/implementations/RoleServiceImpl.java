@@ -50,7 +50,6 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Set<Role> findAllAuthorities() {
-		List<Role> roles = this.roleRepository.findAll();
 		Set<Role> allAuthorities = this.roleRepository.findAll().stream().collect(Collectors.toSet());
 		return allAuthorities;
 	}

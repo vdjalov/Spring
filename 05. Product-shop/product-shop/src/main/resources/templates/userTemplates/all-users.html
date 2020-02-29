@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <th:block th:include="~{fragments/head}"></th:block>
+<body>
+<div class="container-fluid">
+     <th:block th:include="~{fragments/header}"></th:block>
+
+    <main class="mt-3">
+        <h1 class="text-center text-dark">All Users</h1>
+        <hr class="hr-2 bg-dark w-75">
+        <table class="table table-hover w-75 mx-auto">
+            <thead>
+            <tr class="row mx-auto">
+                <th class="col-md-2 text-center">#</th>
+                <th class="col-md-3 text-center">Username</th>
+                <th class="col-md-2 text-center">Email</th>
+                <th class="col-md-2 text-center">Roles</th>
+                <th class="col-md-3 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+                <tr class="row mx-auto">
+                    <th class="col-md-2 text-center">1</th>
+                    <td class="col-md-3 text-center">spaska</td>
+                    <td class="col-md-2 text-center">spaska@abv.bg</td>
+                    <td class="col-md-2 text-center">USER</td>
+                    <td class="col-md-3 text-center">
+                        
+                            <div class="row">
+                                <form action="/users/set-moderator/7f8f5642-9b95-41b2-8508-e91b50fdc12a" method="post" class="mx-1"><input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <button class="btn btn-dark">MODERATOR</button>
+                                </form>
+                                <form action="/users/set-admin/7f8f5642-9b95-41b2-8508-e91b50fdc12a" method="post" class="mx-1"><input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <button class="btn btn-dark">ADMIN</button>
+                                </form>
+                            </div>
+                        
+                        
+                        
+                    </td>
+                </tr>
+            
+                <tr class="row mx-auto">
+                    <th class="col-md-2 text-center">2</th>
+                    <td class="col-md-3 text-center">minka</td>
+                    <td class="col-md-2 text-center">minka@hotmail.com</td>
+                    <td class="col-md-2 text-center">ADMIN, MODERATOR, USER</td>
+                    <td class="col-md-3 text-center">
+                        
+                        
+                        
+                            <div class="row">
+                                <form action="/users/set-user/b08f997c-0ccb-43e6-bb9b-48fb1c06de3f" method="post" class="mx-1"><input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <button class="btn btn-dark">USER</button>
+                                </form>
+                                <form action="/users/set-moderator/b08f997c-0ccb-43e6-bb9b-48fb1c06de3f" method="post" class="mx-1"><input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <button class="btn btn-dark">MODERATOR</button>
+                                </form>
+                            </div>
+                        
+                    </td>
+                </tr>
+            
+                <tr class="row mx-auto">
+                    <th class="col-md-2 text-center">3</th>
+                    <td class="col-md-3 text-center">gosho</td>
+                    <td class="col-md-2 text-center">gosho@mail.cmo</td>
+                    <td class="col-md-2 text-center">MODERATOR, USER</td>
+                    <td class="col-md-3 text-center">
+                        
+                        
+                            <div class="row">
+                                <form action="/users/set-user/e3682d0d-4382-4a93-bd9d-114a3cabca10" method="post" class="mx-1"><input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <button class="btn btn-dark">USER</button>
+                                </form>
+                                <form action="/users/set-admin/e3682d0d-4382-4a93-bd9d-114a3cabca10" method="post" class="mx-1"><input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <button class="btn btn-dark">ADMIN</button>
+                                </form>
+                            </div>
+                        
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+        <hr class="hr-2 bg-dark">
+    </main>
+     <th:block th:include="~{fragments/head}"></th:block>
+</div>
+
+<script>
+ /* load users with JS */
+</script>
+
+</body></html>

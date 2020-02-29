@@ -6,6 +6,7 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "roles")
 public class Role extends BaseEntity implements GrantedAuthority {

@@ -7,13 +7,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.data.models.User;
 import app.data.repository.UserRepository;
 import app.service.RoleService;
 import app.service.UserService;
+import app.service.models.EditUserSeviceModel;
 import app.service.models.RegisterUserServiceModel;
+import app.web.models.EditUserViewModel;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,12 +25,16 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	private RoleService roleService;
 	private ModelMapper modelMapper;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	
 	
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper) {
+	public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userRepository = userRepository;
 		this.roleService = roleService;
 		this.modelMapper = modelMapper;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
 
@@ -56,6 +64,7 @@ public class UserServiceImpl implements UserService {
 		} else {
 			user.setAuthorities(new HashSet<>(Set.of(this.roleService.findByAuthority("USER"))));
 		}
+		user.setPassword(this.bCryptPasswordEncoder.encode(user.getPassword()));
 		this.userRepository.save(user);
 	}
 
@@ -71,6 +80,21 @@ public class UserServiceImpl implements UserService {
 //  Check if password matches confirm password 
 	private boolean checkPasswordMatch(RegisterUserServiceModel registerUserServiceModel) {
 		return registerUserServiceModel.getPassword().matches(registerUserServiceModel.getConfirmPassword());
+	}
+
+
+	@Override
+	public EditUserViewModel editUserProfile(EditUserViewModel editUserViewModel) throws Exception {
+		EditUserSeviceModel editUserSeviceModel = this.modelMapper.map(editUserViewModel, EditUserSeviceModel.class);
+		User user = (User) this.userRepository.findByEmail(editUserSeviceModel.getEmail());
+		
+		if(!this.bCryptPasswordEncoder.matches(editUserSeviceModel.getOldPassword(), user.getPassword())) {
+			throw new Exception("Old password does not match reference");
+		}
+		String newPassword = this.bCryptPasswordEncoder.encode(editUserSeviceModel.getPassword());
+		user.setPassword(newPassword);
+		this.userRepository.save(user);
+		return editUserViewModel;
 	}
 
 
