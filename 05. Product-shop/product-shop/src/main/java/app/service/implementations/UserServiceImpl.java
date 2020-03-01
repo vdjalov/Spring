@@ -1,14 +1,16 @@
 package app.service.implementations;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.data.models.User;
@@ -17,6 +19,7 @@ import app.service.RoleService;
 import app.service.UserService;
 import app.service.models.EditUserSeviceModel;
 import app.service.models.RegisterUserServiceModel;
+import app.service.models.UserServiceModel;
 import app.web.models.EditUserViewModel;
 
 @Service
@@ -95,6 +98,16 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(newPassword);
 		this.userRepository.save(user);
 		return editUserViewModel;
+	}
+
+
+	@Override
+	public List<UserServiceModel> getUsers() {
+				
+		List<UserServiceModel> users = this.userRepository.findAll().stream()
+						   .map(user -> this.modelMapper.map(user, UserServiceModel.class))
+						   .collect(Collectors.toList());
+		 return users;
 	}
 
 
