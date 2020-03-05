@@ -17,5 +17,7 @@ public interface UserService extends UserDetailsService {
 
 	List<UserServiceModel> getUsers();
 
+	void updateUserAuthority(String role, String email);
+
 	
 }

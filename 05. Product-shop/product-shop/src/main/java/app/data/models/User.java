@@ -15,11 +15,13 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import antlr.collections.List;
+
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity implements UserDetails{
+public class User extends BaseEntity implements UserDetails {
 
 	@Column
 	private String email;
@@ -32,7 +34,6 @@ public class User extends BaseEntity implements UserDetails{
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> authorities;
-	
 
 	public User() {}
 	

@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import app.data.models.Role;
 import app.data.models.User;
 import app.data.repository.UserRepository;
 import app.service.RoleService;
@@ -108,6 +109,19 @@ public class UserServiceImpl implements UserService {
 						   .map(user -> this.modelMapper.map(user, UserServiceModel.class))
 						   .collect(Collectors.toList());
 		 return users;
+	}
+
+
+	@Override
+	public void updateUserAuthority(String role, String email) {
+		User user = (User) this.loadUserByUsername(email);
+		Role currentRole = roleService.findByAuthority(role.toUpperCase()); // Add models
+		Set<Role> authorities = (Set<Role>) user.getAuthorities();
+		authorities.add(currentRole);
+		user.setAuthorities(authorities);
+		
+		this.userRepository.save(user);
+		
 	}
 
 

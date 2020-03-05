@@ -19,7 +19,7 @@ public class UserApiController {
 
 	
 	private UserService userService;
-	
+
 	
 	@Autowired
 	public UserApiController(UserService userService) {
@@ -37,7 +37,7 @@ public class UserApiController {
 	@PostMapping("/users/set-role/{role}/{email}")
 	public ModelAndView updateRoleToModerator(@PathVariable("role") String role, @PathVariable("email") String email) {
 		
-		
+		this.userService.updateUserAuthority(role, email);
 		return new ModelAndView("redirect:/users/all");
 	}
 	
