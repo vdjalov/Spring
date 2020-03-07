@@ -2,6 +2,7 @@ package app.service.implementations;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -92,6 +93,12 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProductById(int id) {
 		this.productRepository.deleteById(id);
 		
+	}
+
+
+	@Override
+	public Optional<Product> findProductById(int productId) {
+		return this.productRepository.findById(productId);
 	}
 
 

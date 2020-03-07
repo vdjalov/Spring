@@ -30,6 +30,9 @@
                     <a class="nav-link" th:href="@{/home}">Home</a>
                 </li>
                 <li class="nav-item active" sec:authorize ="hasAuthority('USER') && !hasAnyAuthority('MODERATOR', 'ADMIN')">
+                     <a class="nav-link" th:href="@{/cart/all}">Cart</a>
+                </li>
+                <li class="nav-item active" sec:authorize ="hasAuthority('USER') && !hasAnyAuthority('MODERATOR', 'ADMIN')">
                     <a class="nav-link" th:href="@{/orders/my}">My Orders</a>
                 </li>
                 <li class="nav-item active">
