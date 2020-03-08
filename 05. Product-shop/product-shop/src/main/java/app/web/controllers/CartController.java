@@ -54,8 +54,9 @@ public class CartController {
 	
 	@PostMapping("/checkout")
 	@PreAuthorize("hasAnyAuthority('USER', 'MODERATOR', 'ADMIN')")
-	public ModelAndView checkoutCart() {
-		this.orderService.checkCartOut();
+	public ModelAndView checkoutCart(Principal principal) {
+		String username = principal.getName();
+		this.orderService.checkCartOut(username);
 		return new ModelAndView("redirect:/orders/my");
 	}
 	

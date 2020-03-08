@@ -82,8 +82,13 @@ public class OrderServiceImpl implements OrderService {
 	
 
 	@Override
-	public void checkCartOut() {
-		// TO DO
+	public void checkCartOut(String username) {
+		this.orderRepository.findAll().stream()
+							.filter(order -> order.isPaid() == false && order.getCustomer().getUsername().equals(username))
+							.forEach(order -> {
+								order.setPaid(true);
+								this.orderRepository.saveAndFlush(order);
+							});
 		
 	}
 	
@@ -91,6 +96,27 @@ public class OrderServiceImpl implements OrderService {
 //	Calculate order cost 
 	private double calculateTotalPrice(double price, int quantity) {
 		return price * quantity;
+	}
+
+
+	@Override
+	public OrderToCartView findOrderById(int orderId) throws Exception {
+		Optional<Order> order = this.orderRepository.findById(orderId);
+		if(order.get() == null) {
+			throw new Exception("Order does not exist");
+		}
+		OrderToCartView orderToCartView = this.modelMapper.map(order.get(), OrderToCartView.class);
+		
+		return orderToCartView;
+	}
+
+
+	@Override
+	public List<OrderToCartView> findAllOrders() {
+		List<OrderToCartView> orders = this.orderRepository.findAll().stream()
+										   .map(order -> this.modelMapper.map(order, OrderToCartView.class))
+										   .collect(Collectors.toList());
+		return orders;
 	}
 	
 }

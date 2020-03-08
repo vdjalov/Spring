@@ -21,14 +21,18 @@
             </tr>
             </thead>
             <tbody>
-            	<th:block th:each="order: ${orders}">
+            	<th:block th:each="order, iter: ${orders}">
 	                <tr class="row mx-auto">
-	                    <th class="col-md-1 text-center">1</th>
-	                    <td class="col-md-3"><div class="text-center"><a th:href="{/orders/details/} + ${order.id}">
-	                        <img th:src="${order.product.imageUrl}" width="40" height="40" alt="Product">
-	                    </a></div></td>
-	                    <td class="col-md-3 text-center">[[${order.user.name}]]</td>
-	                    <td class="col-md-2 text-center">[[${order.totalCost}]]</td>
+	                    <th class="col-md-1 text-center">[[${iter.index + 1}]]</th>
+	                    <td class="col-md-3">
+	                    	<div class="text-center">
+		                    <a th:href="@{/orders/details/} + ${order.id}">
+		                        <img th:src="${order.product.imageUrl}" width="40" height="40" alt="Product">
+		                    </a>
+		                	</div>
+		                </td>
+	                    <td class="col-md-3 text-center">[[${order.customer.email}]]</td>
+	                    <td class="col-md-2 text-center">[[${order.totalPrice}]]</td>
 	                    <td class="col-md-3 text-center">[[${order.date}]]</td>
 	                </tr>
                 </th:block>

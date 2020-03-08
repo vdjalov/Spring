@@ -24,6 +24,8 @@ public class OrderController {
 
 	public static final String ORDER_PRODUCT_VIEW = "orderTemplates/order-product";
 	public static final String MY_ORDERS_VIEW = "orderTemplates/my-orders";
+	public static final String ORDER_DETAILS_VIEW = "orderTemplates/order-details";
+	public static final String ALL_ORDERS_VIEW = "orderTemplates/all-orders";
 	
 	private ProductService productService;
 	private OrderService orderService;
@@ -72,7 +74,31 @@ public class OrderController {
 	}
 	
 	
+	@GetMapping("/details/{orderId}")
+	@PreAuthorize("hasAnyAuthority('USER', 'MODERATOR', 'ADMIN')")
+	public ModelAndView getOrderDetailById(@PathVariable("orderId") int orderId, ModelAndView modelAndView) {
+		OrderToCartView orderToCartView = null;
+		try {
+			orderToCartView = this.orderService.findOrderById(orderId);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("redirect:/orders/my");
+		}
+		
+		modelAndView.setViewName(ORDER_DETAILS_VIEW);
+		modelAndView.addObject("order", orderToCartView);
+		return modelAndView;
+	}
 	
+	
+	@GetMapping("/all")
+	@PreAuthorize("hasAnyAuthority('USER', 'MODERATOR', 'ADMIN')")
+	public ModelAndView getOrderDetailById(ModelAndView modelAndView) {
+		List<OrderToCartView> orders = this.orderService.findAllOrders();
+		modelAndView.setViewName(ALL_ORDERS_VIEW);
+		modelAndView.addObject("orders", orders);
+		return modelAndView;
+	}
 	
 }
 

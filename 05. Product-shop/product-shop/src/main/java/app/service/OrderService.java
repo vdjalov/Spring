@@ -14,7 +14,11 @@ public interface OrderService {
 
 	List<OrderToCartView> findCheckedOutOrders(String username);
 
-	void checkCartOut();
+	void checkCartOut(String username);
+
+	OrderToCartView findOrderById(int orderId) throws Exception;
+
+	List<OrderToCartView> findAllOrders();
 
 	
 	
