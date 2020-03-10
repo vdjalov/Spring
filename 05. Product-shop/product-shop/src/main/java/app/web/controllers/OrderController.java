@@ -39,7 +39,7 @@ public class OrderController {
 
 	@GetMapping("/product/{id}")
 	@PreAuthorize("hasAnyAuthority('USER', 'MODERATOR', 'ADMIN')")
-	public ModelAndView getOrderDetailsView(@PathVariable("id") int id, Principal principal, ModelAndView modelAndView) {
+	public ModelAndView getOrderProductDetailsView(@PathVariable("id") int id, Principal principal, ModelAndView modelAndView) {
 		ProductDetailsView productDetailsView = this.productService.getProductById(id);
 		String name = principal.getName();
 		modelAndView.addObject("name", name);
@@ -76,7 +76,7 @@ public class OrderController {
 	
 	@GetMapping("/details/{orderId}")
 	@PreAuthorize("hasAnyAuthority('USER', 'MODERATOR', 'ADMIN')")
-	public ModelAndView getOrderDetailById(@PathVariable("orderId") int orderId, ModelAndView modelAndView) {
+	public ModelAndView getOrderDetailsById(@PathVariable("orderId") int orderId, ModelAndView modelAndView) {
 		OrderToCartView orderToCartView = null;
 		try {
 			orderToCartView = this.orderService.findOrderById(orderId);
@@ -92,7 +92,7 @@ public class OrderController {
 	
 	
 	@GetMapping("/all")
-	@PreAuthorize("hasAnyAuthority('USER', 'MODERATOR', 'ADMIN')")
+	@PreAuthorize("hasAnyAuthority('MODERATOR', 'ADMIN')")
 	public ModelAndView getOrderDetailById(ModelAndView modelAndView) {
 		List<OrderToCartView> orders = this.orderService.findAllOrders();
 		modelAndView.setViewName(ALL_ORDERS_VIEW);
