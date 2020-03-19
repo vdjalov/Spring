@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <th:block th:include="~{fragments/head}"></th:block>
+<body>
+<div class="container-fluid">
+         <th:block th:include="~{fragments/header}"></th:block>
+    
+    <main class="mt-3">
+        <h1 class="text-center text-dark">Shopping Cart</h1>
+        <hr class="hr-2 bg-dark w-75">
+        <table class="table table-hover w-75 mx-auto">
+            <thead>
+            <tr class="row mx-auto">
+                <th class="col-md-2 text-center">Image</th>
+                <th class="col-md-3 text-center">Name</th>
+                <th class="col-md-2 text-center">Description</th>
+                <th class="col-md-2 text-center">Price</th>
+                <th class="col-md-1 text-center">Quantity</th>
+                <th class="col-md-2 text-center">Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            	<th:block th:each="order: ${orders}">
+                <tr class="row mx-auto">
+                    <th class="col-md-2 text-center"><img th:src="${order.product.imageUrl}" alt="Product" height="100" width="100"></th>
+                    <td class="col-md-3 text-center">[[${order.product.name}]]</td>
+                    <td class="col-md-2 text-center">[[${order.product.description}]]</td>
+                    <td class="col-md-2 text-center"th:text="${#numbers.formatDecimal(order.product.price, 0, 2, 'POINT')} + ' BGN'"></td>
+                    <td class="col-md-1 text-center">[[${order.quantity}]]</td>
+                    <td class="col-md-2 text-center">
+                        <form th:action="@{/cart/remove/} + ${order.id} " method="post">
+                            <div class="button-holder d-flex justify-content-center">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                  </th:block>
+            </tbody>
+        </table>
+        <hr class="hr-2 bg-dark">
+        <div class="text-center">
+            <h3><span th:text="${#numbers.formatDecimal(totalCost, 0, 2, 'POINT')} + ' BGN'"></span></h3>
+        </div>
+        <form action="/cart/checkout" method="post">
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-success">Checkout</button>
+            </div>
+        </form>
+    </main>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</div>
+</body>
+</html>
